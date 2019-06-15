@@ -1,11 +1,17 @@
-const express = require("express");
-const path = require('path')
+import express from "express";
+import { products } from "../models/products";
+
 const router = express.Router();
 
-const rootDir = require("../utils/path");
-
-router.get('/', (req, res, next) => {
-  res.sendFile(path.join(rootDir, 'views', 'shop.html'));
+router.get("/", (req, res, next) => {
+  res.render("shop", {
+    pageTitle: "Shop",
+    products,
+    path: "/",
+    hasProducts: products.length > 0,
+    activeShop: true,
+    productsCss: true
+  });
 });
 
-module.exports = router;
+export { router };

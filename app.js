@@ -1,24 +1,23 @@
-const express = require("express");
-const bodyParser = require('body-parser')
+import express from "express";
+import path from "path";
+import bodyParser from "body-parser";
 
-const path = require("path");
+import { router as adminRouter } from "./routes/admin";
+import { router as shopRouter } from "./routes/shop";
+
 const app = express();
 
-const adminRoutes = require("./routes/admin");
-const shopRoutes = require("./routes/shop");
-
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
-app.set('view engine', 'ejs')
-app.set('views', 'views')
+app.set("view engine", "ejs");
+app.set("views", "views");
 
-app.use('/admin', adminRoutes.router);
-app.use(shopRoutes)
+app.use("/admin", adminRouter);
+app.use(shopRouter);
 
 app.use((req, res, next) => {
-  res.render('404', {pageTitle: 'Page not found'})
+  res.render("404", { pageTitle: "Page not found", path: "/" });
 });
 
 app.listen(3000);
-
