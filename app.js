@@ -2,8 +2,9 @@ import express from "express";
 import path from "path";
 import bodyParser from "body-parser";
 
-import { router as adminRouter } from "./routes/admin";
-import { router as shopRouter } from "./routes/shop";
+import { adminRouter } from "./routes/admin";
+import { shopRouter } from "./routes/shop";
+import { get404 } from "./controllers/404";
 
 const app = express();
 
@@ -14,10 +15,12 @@ app.set("view engine", "ejs");
 app.set("views", "views");
 
 app.use("/admin", adminRouter);
+app.get('/test', (req,res) => {
+    res.sendFile(path.join(__dirname, 'views', 's.html'))
+    // res.sendFile(views', 'sample')
+})
 app.use(shopRouter);
 
-app.use((req, res, next) => {
-  res.render("404", { pageTitle: "Page not found", path: "/" });
-});
+app.use(get404);
 
 app.listen(3000);

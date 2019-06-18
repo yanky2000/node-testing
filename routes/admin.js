@@ -1,21 +1,7 @@
 import express from "express";
-import { products } from "../models/products";
+import { getAddProduct, postAddProduct } from "../controllers/products";
 
-const router = express.Router();
+export const adminRouter = express.Router();
 
-router.get("/add-product", (req, res, next) => {
-  res.render("add-product", {
-    pageTitle: "Add product",
-    path: "/admin/add-product",
-    formsCss: true,
-    productCss: true,
-    activeAddProduct: true
-  });
-});
+adminRouter.get("/add-product", getAddProduct).post("/add-product", postAddProduct);
 
-router.post("/add-product", (req, res) => {
-  products.push({ title: req.body.title });
-  res.redirect("/");
-});
-
-export { router, products };

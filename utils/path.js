@@ -1,5 +1,5 @@
 import path from 'path'
 
-export default rootDir =  path.dirname(process.mainModule.filename)
+export const rootDir =  path.dirname(process.mainModule.filename)
 
 
